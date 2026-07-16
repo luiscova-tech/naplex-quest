@@ -1,0 +1,12 @@
+{
+    "name": "EduPZO",
+    "level": 1,
+    "xp": 25,
+    "gold": 5,
+    "clinical_confidence": 65,
+    "region": "Foundations Village",
+    "completed_quests": [
+        "pk_pd_001"
+    ],
+    "badges": []
+}
