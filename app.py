@@ -15,6 +15,11 @@ from game.screens.intro import render_intro
 from game.screens.clinic import render_clinic
 from game.screens.location import render_location
 
+from game.screens.grand_pharmacist import (
+    render_exam_question_header,
+    render_grand_pharmacist_header,
+    render_study_question_header,
+)
 st.set_page_config(
     page_title="NAPLEX Quest",
     page_icon="⚕️",
@@ -225,39 +230,7 @@ else:
         st.write(selected.description)
 
         if selected.name == "Grand Pharmacist":
-            if st.session_state.chapter_mastered:
-                st.markdown(
-                    """
-                    ### ✨ The First Chapter Has Been Restored
-
-                    The floating page glows bright gold and returns to the **Book of Therapeutics**.
-
-                    The Grand Pharmacist smiles.
-
-                    > "Excellent. Pharmacia remembers."
-                    """
-                )
-                st.info("The chapter is complete. More regions and quests will unlock as the game expands.")
-            else:
-                st.markdown(
-                    """
-                    ### Quest Log
-
-                    **Quest 1: Restore the First Lost Chapter**
-
-                    A villager reports that the Shadow Alchemist has clouded the meaning of
-                    *pharmacokinetics* and *pharmacodynamics*.
-
-                    Your task is to restore the chapter by answering the Grand Pharmacist's challenge.
-                    """
-                )
-
-                st.subheader("Your First Quest")
-                st.write(
-                    "A glowing page from the Book of Therapeutics floats before you. "
-                    "Answer carefully to restore its light."
-                )
-
+            
                 if st.session_state.current_question_id is None:
                     next_q = choose_next_question(question_bank)
                     if next_q is not None:
@@ -271,7 +244,7 @@ else:
                     save_player(player)
                     st.rerun()
 
-                st.markdown("### Challenge of the Grand Pharmacist")
+                render_study_question_header()
 
                 if st.session_state.game_mode == "Study Mode":
                     st.write(q.prompt)
@@ -345,8 +318,7 @@ else:
                                 st.rerun()
 
                 else:
-                    st.write("### Exam Challenge")
-                    st.write("Choose the best answer. No hints. No coaching until after grading.")
+                    render_exam_question_header()
 
                     options = EXAM_QUESTION_CHOICES[q.id]["choices"]
                     correct_letter = EXAM_QUESTION_CHOICES[q.id]["correct"]
@@ -433,11 +405,5 @@ else:
                 st.write("Shelves of tinctures and tonics line the walls. Preparation and precision matter here.")
             elif selected.name == "Village Square":
                 st.write("The heart of Foundations Village. Travelers gather here before continuing their journey.")
-                st.write("Ancient books whisper of pharmacology, calculations, and clinical reasoning.")
-            elif selected.name == "Apothecary":
-                st.write("Shelves of tinctures and tonics line the walls. Preparation and precision matter here.")
-            elif selected.name == "Village Square":
-                st.write("The heart of Foundations Village. Travelers gather here before continuing their journey.")
-
     else:
         st.info("Choose a location in Foundations Village to explore the realm.")
